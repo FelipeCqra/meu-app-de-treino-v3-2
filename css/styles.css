@@ -34,7 +34,7 @@ h1, h2, h3, .tab-header h1, .section-title {
     letter-spacing: 0.5px;
 }
 
-.app-container { width: 100%; margin: 0 auto; padding: 20px 16px; transition: margin 0.3s ease; }
+.app-container { width: 100%; margin: 0 auto; padding: 20px 16px 120px 16px; transition: margin 0.3s ease; }
 
 /* Tabs Logic */
 .app-tab { display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s ease; }
@@ -268,56 +268,5 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         position: static !important;
         display: inline-block;
         margin-bottom: 12px;
-    }
-}
-
-/* ==========================================================================
-   CORREÇÕES DE RESPONSIVIDADE MOBILE
-   ========================================================================== */
-
-@media (max-width: 799px) {
-    /* 1. Evita que o menu inferior e o botão de Salvar cubram o final das telas */
-    .app-container {
-        padding-bottom: 160px !important;
-    }
-
-    /* 2. HISTÓRICO: Ajusta o texto da tag/fase para não invadir os botões de edição */
-    .semana-summary > div:first-child {
-        flex: 1;
-        min-width: 0;
-        padding-right: 8px;
-    }
-
-    .semana-summary span {
-        word-break: break-word;
-        white-space: normal;
-    }
-
-    /* 3. REGISTRAR SESSÃO: Limita a largura do select para não colidir com os botões [⬆️][⬇️][❌] */
-    .exercise-block {
-        padding: 14px 10px !important;
-    }
-
-    .exercise-block > .input-group:first-of-type {
-        width: calc(100% - 105px) !important;
-    }
-
-    /* 4. REGISTRAR SESSÃO: Ajusta o grid das séries para caber em telas estreitas */
-    .sets-row-v2 {
-        grid-template-columns: 1.6fr 1fr 1fr 1fr 28px !important;
-        gap: 4px !important;
-    }
-
-    .sets-row-v2 input, 
-    .sets-row-v2 select {
-        padding: 8px 2px !important;
-        font-size: 11px !important;
-    }
-
-    /* 5. DIETA / PROTOCOLO: Ajuste fino para telas muito pequenas (< 380px) */
-    @media (max-width: 380px) {
-        .macro-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-        }
     }
 }
