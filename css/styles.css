@@ -194,7 +194,23 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     cursor: pointer; border-radius: 14px; transition: all 0.2s; width: 100%;
 }
 .nav-item.active { color: var(--text-main); background-color: rgba(255,255,255,0.08); transform: translateY(-2px); }
-.nav-icon { font-size: 20px; margin-bottom: 4px; }
+
+/* Ajuste para ícones vetoriais SVG */
+.nav-icon { 
+    width: 20px; 
+    height: 20px; 
+    stroke: var(--text-muted); 
+    margin-bottom: 4px; 
+    transition: stroke 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+/* Faz o ícone ativo acender em Verde Neon */
+.nav-item.active .nav-icon {
+    stroke: var(--accent);
+    transform: scale(1.1);
+}
+
 .nav-label { font-size: 9px; font-weight: 700; text-align: center; white-space: nowrap; letter-spacing: 0.3px; }
 
 .btn-save-action { margin-bottom: 12px; box-shadow: 0 8px 25px rgba(204, 255, 0, 0.3); pointer-events: auto; }
@@ -237,7 +253,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         padding: 16px 20px; border-radius: 16px;
     }
     .nav-item.active { transform: none; background: rgba(255,255,255,0.05); }
-    .nav-icon { font-size: 24px; margin-bottom: 0; }
+    .nav-icon { width: 22px; height: 22px; margin-bottom: 0; } /* Ajustado de font-size para largura/altura */
     .nav-label { font-size: 15px; }
     
     .volume-grid { grid-template-columns: repeat(2, 1fr); }
