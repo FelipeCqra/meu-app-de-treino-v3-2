@@ -85,11 +85,24 @@ h1, h2, h3, .tab-header h1, .section-title {
 .day-workout { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.2; }
 .day-extra { font-size: 10px; color: var(--info); margin-top: 6px; font-weight: 600; }
 
-.prep-list { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+.prep-list { 
+    list-style: none; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    font-size: 13px; 
+    padding: 0; /* Zera o recuo padrão da lista */
+    margin: 0;  /* Garante alinhamento perfeito */
+}
 .prep-list li { display: flex; align-items: flex-start; gap: 10px; background: var(--bg-input); padding: 10px; border-radius: 8px; }
 .prep-icon { font-size: 16px; }
 
-.volume-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+.volume-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); /* Alterado de 4 para 2 colunas no mobile */
+    gap: 8px; 
+    margin-bottom: 12px; 
+}
 .volume-item { background: var(--bg-input); padding: 10px 4px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
 .volume-item span { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
 .volume-item strong { font-size: 14px; color: var(--success); }
@@ -264,7 +277,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     .nav-icon { width: 22px; height: 22px; margin-bottom: 0; } /* Ajustado de font-size para largura/altura */
     .nav-label { font-size: 15px; }
     
-    .volume-grid { grid-template-columns: repeat(2, 1fr); }
+    .volume-grid { 
+        grid-template-columns: repeat(4, 1fr); /* 4 colunas em telas maiores */
+    }
 }
 /* ==========================================================================
    CORREÇÃO DE RESPONSIVIDADE: BADGES EM TELAS MÓVEIS (CELULAR)
