@@ -34,7 +34,7 @@ h1, h2, h3, .tab-header h1, .section-title {
     letter-spacing: 0.5px;
 }
 
-.app-container { width: 100%; margin: 0 auto; padding: 20px 16px 120px 16px; transition: margin 0.3s ease; }
+.app-container { width: 100%; margin: 0 auto; padding: 20px 16px 180px 16px; transition: margin 0.3s ease; }
 
 /* Tabs Logic */
 .app-tab { display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s ease; }
