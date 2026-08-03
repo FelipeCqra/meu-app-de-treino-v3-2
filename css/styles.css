@@ -20,6 +20,11 @@
     --info-glow: rgba(0, 122, 255, 0.15);
 }
 
+/* Correção Global de Box Model */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
