@@ -116,11 +116,27 @@ h1, h2, h3, .tab-header h1, .section-title {
 .exercise-list li span { color: var(--accent); font-weight: 700; font-size: 12px; background: var(--accent-glow); padding: 2px 6px; border-radius: 4px; }
 
 /* Dieta UI - Macro Grid & Meals */
-.water-card { display: flex; align-items: center; gap: 16px; background: rgba(0, 122, 255, 0.05); border-color: rgba(0, 122, 255, 0.2); }
-.water-icon { font-size: 32px; }
-.water-text h3 { font-size: 15px; color: var(--info); margin-bottom: 4px; }
-.water-text p { font-size: 13px; }
-.alert-text { font-size: 11px !important; color: var(--warning); margin-top: 6px; font-style: italic; opacity: 0.9; }
+.water-card { 
+    display: flex !important; 
+    flex-direction: row !important; /* Garante ícone e texto lado a lado */
+    justify-content: flex-start !important; /* Empurra todo o conteúdo para a esquerda */
+    align-items: center; 
+    gap: 16px; 
+    background: rgba(0, 122, 255, 0.05); 
+    border-color: rgba(0, 122, 255, 0.2); 
+    text-align: left; 
+}
+.water-icon { 
+    font-size: 32px; 
+    flex-shrink: 0; /* Impede que o ícone mude de tamanho */
+}
+.water-text { 
+    text-align: left; 
+    flex: 1; /* Faz a div de texto preencher o resto da largura */
+}
+.water-text h3 { font-size: 15px; color: var(--info); margin-bottom: 4px; text-align: left; }
+.water-text p { font-size: 13px; text-align: left; }
+.alert-text { font-size: 11px !important; color: var(--warning); margin-top: 6px; font-style: italic; opacity: 0.9; text-align: left; }
 
 .macro-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 20px; }
 .macro-card { background: rgba(0,0,0,0.2); padding: 12px 4px; border-radius: 12px; text-align: center; border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
@@ -293,3 +309,4 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         margin-bottom: 12px;
     }
 }
+
