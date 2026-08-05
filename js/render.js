@@ -227,15 +227,15 @@ export function renderNovaSerie(setsContainer, defaultType = "Ajuste") {
   const row = document.createElement("div");
   row.className = "sets-row-v2 dynamic-set";
   row.innerHTML = `
-        <select class="set-type" style="padding: 8px 4px; font-size:12px;">
+        <select class="set-type" style="padding: 12px 4px; font-size:14px; border-radius: 8px;">
             <option value="Aquecimento" ${defaultType === "Aquecimento" ? "selected" : ""}>Aquec.</option>
             <option value="Ajuste" ${defaultType === "Ajuste" ? "selected" : ""}>Feeder</option>
             <option value="Válida" ${defaultType === "Válida" ? "selected" : ""}>Válida</option>
         </select>
-        <input type="number" class="set-placas" placeholder="Pl." ${disabledAttr} style="padding: 8px 4px; text-align:center; font-size:12px; ${opacityStyle}">
-        <input type="number" class="set-load" placeholder="kg" step="0.5" ${disabledAttr} style="padding: 8px 4px; text-align:center; font-size:12px; ${opacityStyle}">
-        <input type="text" class="set-reps" placeholder="${repsPlaceholder}" style="padding: 8px 4px; text-align:center; font-size:12px;">
-        <button type="button" class="btn-del-set" style="background:transparent; color:var(--accent); border:none; font-size:20px; cursor:pointer; text-align:center; padding-bottom: 4px;">×</button>
+        <input type="number" inputmode="numeric" pattern="[0-9]*" class="set-placas" placeholder="Pl." ${disabledAttr} style="padding: 12px 4px; text-align:center; font-size:14px; border-radius: 8px; ${opacityStyle}">
+        <input type="number" inputmode="decimal" class="set-load" placeholder="kg" step="0.5" ${disabledAttr} style="padding: 12px 4px; text-align:center; font-size:14px; border-radius: 8px; ${opacityStyle}">
+        <input type="number" inputmode="numeric" pattern="[0-9]*" class="set-reps" placeholder="${repsPlaceholder}" style="padding: 12px 4px; text-align:center; font-size:14px; border-radius: 8px;">
+        <button type="button" class="btn-del-set" style="background:transparent; color:var(--accent); border:none; font-size:24px; cursor:pointer; text-align:center; padding-bottom: 4px;">×</button>
     `;
   row
     .querySelector(".btn-del-set")
