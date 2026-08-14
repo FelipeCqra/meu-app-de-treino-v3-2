@@ -132,11 +132,32 @@ function mudarAba(targetTab) {
   }
 }
 
+// Função que lê a URL e muda a aba correspondente
+function verificarAbaPelaURL() {
+  // Pega o hash da URL (ex: #tab-dieta). Se não houver, usa o padrão #tab-protocolo
+  let hash = window.location.hash || "#tab-protocolo";
+  // Remove o caractere '#' para pegar apenas o ID
+  let targetTab = hash.substring(1);
+
+  // Validação: se o usuário digitar uma URL que não existe, força voltar para o protocolo
+  if (!document.getElementById(targetTab)) {
+    targetTab = "tab-protocolo";
+    window.location.hash = "#" + targetTab;
+  }
+
+  mudarAba(targetTab);
+}
+
+// Quando o usuário clica no menu, alteramos a URL em vez de mudar a aba diretamente
 document.querySelectorAll(".nav-item").forEach((btn) => {
-  btn.addEventListener("click", () =>
-    mudarAba(btn.getAttribute("data-target")),
-  );
+  btn.addEventListener("click", () => {
+    const target = btn.getAttribute("data-target");
+    window.location.hash = "#" + target; // Isso dispara o evento 'hashchange'
+  });
 });
+
+// Escuta as mudanças na URL (permite que os botões de Voltar/Avançar do celular ou navegador funcionem)
+window.addEventListener("hashchange", verificarAbaPelaURL);
 
 // ==========================================
 // LÓGICA DO FORMULÁRIO DE SESSÃO
@@ -371,8 +392,8 @@ async function handleFormSubmit(e) {
 document.addEventListener("DOMContentLoaded", () => {
   definirDataHoje();
 
-  // Força a inicialização visual na aba de Protocolo
-  mudarAba("tab-protocolo");
+  // Força a leitura da URL inicial para abrir a aba correta quando o site carrega
+  verificarAbaPelaURL();
 
   const container = document.getElementById("exercicios-container");
   const btnAddExercise = document.getElementById("btn-adicionar-exercicio");
