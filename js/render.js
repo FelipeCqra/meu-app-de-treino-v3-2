@@ -369,3 +369,155 @@ export function renderHistoricoTreinos(treinos, container, onEdit, onDelete) {
     container.appendChild(accordion);
   });
 }
+
+export function renderCargasPorFrequencia(treinos, container) {
+  container.innerHTML = "";
+
+  // 1. Mapear grupos musculares dinamicamente lendo suas arrays já existentes
+  const mapaGrupos = {};
+  let grupoAtual = "OUTROS";
+  const todasAsListas = [exerciciosUpper, exerciciosLower];
+
+  todasAsListas.forEach((lista) => {
+    lista.forEach((item) => {
+      if (item.startsWith("---")) {
+        grupoAtual = item.replace(/-/g, "").trim().toUpperCase();
+      } else {
+        mapaGrupos[item] = grupoAtual;
+      }
+    });
+  });
+
+  // 2. Processar treinos (do mais antigo para o mais novo)
+  const treinosOrdenados = [...treinos].sort(
+    (a, b) => a.dataMilisegundos - b.dataMilisegundos,
+  );
+  const estatisticas = {};
+
+  treinosOrdenados.forEach((treino) => {
+    if (!treino.exercicios) return;
+
+    treino.exercicios.forEach((ex) => {
+      const nome = ex.nome;
+      const grupo = mapaGrupos[nome] || "OUTROS";
+
+      const seriesValidas = (ex.series || []).filter(
+        (s) => s.tipo === "Válida",
+      );
+
+      if (seriesValidas.length > 0) {
+        if (!estatisticas[nome]) {
+          estatisticas[nome] = {
+            nome: nome,
+            grupo: grupo,
+            frequencia: 0,
+            ultimasSeries: [],
+          };
+        }
+        estatisticas[nome].frequencia += 1;
+        estatisticas[nome].ultimasSeries = seriesValidas;
+      }
+    });
+  });
+
+  // 3. Agrupar por Músculo
+  const agrupadoPorMusculo = {};
+  Object.values(estatisticas).forEach((dados) => {
+    if (!agrupadoPorMusculo[dados.grupo]) {
+      agrupadoPorMusculo[dados.grupo] = [];
+    }
+    agrupadoPorMusculo[dados.grupo].push(dados);
+  });
+
+  if (Object.keys(agrupadoPorMusculo).length === 0) {
+    container.innerHTML = `<p style="color:var(--text-muted); font-style:italic; text-align:center; padding: 40px 20px;">Nenhuma carga registrada em séries válidas ainda.</p>`;
+    return;
+  }
+
+  // 4. ORDEM E FILTRO ESTABELECIDOS POR VOCÊ:
+  const ordemExata = [
+    "COSTAS",
+    "PEITO",
+    "OMBRO",
+    "BÍCEPS",
+    "TRÍCEPS",
+    "QUADRÍCEPS",
+    "POSTERIOR",
+    "PANTURRILHA",
+  ];
+
+  ordemExata.forEach((grupo) => {
+    // Se não tivermos exercícios registrados para este grupo, pula
+    if (!agrupadoPorMusculo[grupo] || agrupadoPorMusculo[grupo].length === 0)
+      return;
+
+    // Ordena os exercícios do grupo por frequência
+    const exerciciosDoGrupo = agrupadoPorMusculo[grupo].sort(
+      (a, b) => b.frequencia - a.frequencia,
+    );
+
+    const divGrupo = document.createElement("div");
+    divGrupo.className = "carga-group";
+
+    // Criar o Cabeçalho (Botão de abrir e fechar)
+    const headerGrupo = document.createElement("div");
+    headerGrupo.className = "carga-group-title";
+    headerGrupo.innerHTML = `
+            <span>${grupo}</span>
+            <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
+
+    // Criar a caixa onde ficarão os cartões
+    const contentGrupo = document.createElement("div");
+    contentGrupo.className = "carga-group-content";
+    contentGrupo.style.display = "none"; // Começa fechado por padrão
+
+    // Lógica de abrir/fechar ao clicar
+    headerGrupo.addEventListener("click", () => {
+      const estaAberto = contentGrupo.style.display === "block";
+      contentGrupo.style.display = estaAberto ? "none" : "block";
+      headerGrupo.classList.toggle("open", !estaAberto);
+    });
+
+    // Adiciona os cartões dentro do conteúdo
+    exerciciosDoGrupo.forEach((ex) => {
+      const card = document.createElement("div");
+      card.className = "carga-card";
+
+      let htmlSeries = "";
+      ex.ultimasSeries.forEach((s, idx) => {
+        let infoPeso = [];
+        if (s.placas) infoPeso.push(`${s.placas} Pl.`);
+        if (s.carga) infoPeso.push(`${s.carga}kg`);
+        let strPeso = infoPeso.length > 0 ? infoPeso.join(" / ") : "Sem peso";
+
+        let labelReps = ex.nome === "Canoinha isometria" ? "Segs" : "Reps";
+        if (ex.nome === "Canoinha isometria") strPeso = "Isometria";
+
+        htmlSeries += `
+                    <div class="carga-set-row">
+                        <span style="color:var(--text-muted)">Série ${idx + 1}</span>
+                        <span><span class="carga-weight">${strPeso}</span> &nbsp;|&nbsp; ${s.reps} ${labelReps}</span>
+                    </div>
+                `;
+      });
+
+      card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="carga-ex-name">${ex.nome}</span>
+                    <span style="font-size: 10px; color: var(--text-muted); background: var(--bg-input); padding: 2px 6px; border-radius: 4px;">Feito ${ex.frequencia}x</span>
+                </div>
+                <div class="carga-sets-container">
+                    ${htmlSeries}
+                </div>
+            `;
+      contentGrupo.appendChild(card);
+    });
+
+    divGrupo.appendChild(headerGrupo);
+    divGrupo.appendChild(contentGrupo);
+    container.appendChild(divGrupo);
+  });
+}
