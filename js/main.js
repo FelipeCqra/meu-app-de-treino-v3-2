@@ -79,6 +79,7 @@ import {
   renderNovaLinhaExercicio,
   renderHistoricoTreinos,
   obterOpcoesDeExercicios,
+  renderCargasPorFrequencia, // <--- ADICIONE ESTA LINHA AQUI
 } from "./render.js";
 
 let editingDocId = null;
@@ -172,12 +173,19 @@ async function atualizarHistorico() {
   const container = document.getElementById("historico-container");
   if (!container) return;
   await buscarTodosOsTreinos((listaTreinos) => {
+    // Renderiza o histórico padrão
     renderHistoricoTreinos(
       listaTreinos,
       container,
       iniciarEdicao,
       deletarTreino,
     );
+
+    // --- NOVA LÓGICA DAS CARGAS ---
+    const cargasContainer = document.getElementById("cargas-container");
+    if (cargasContainer) {
+      renderCargasPorFrequencia(listaTreinos, cargasContainer);
+    }
   });
 }
 
