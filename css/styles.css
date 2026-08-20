@@ -218,7 +218,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 
 .main-nav {
     display: grid; 
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr); /* <-- Alterado para 6 colunas */
     background: rgba(30, 30, 35, 0.85); border: 1px solid rgba(255,255,255,0.1);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-radius: 20px; padding: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
@@ -310,3 +310,44 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     }
 }
 
+/* ==========================================================================
+   TELA DE CARGAS ATUAIS
+   ========================================================================== */
+.carga-group { 
+    margin-bottom: 28px; /* <-- Espaçamento maior entre os grupos (antes era 16px) */
+}
+
+/* Título Clicável (Accordion) */
+.carga-group-title { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    font-size: 20px; /* <-- Fonte maior (antes era 16px) */
+    font-weight: 700; /* <-- Peso da fonte levemente reduzido para não ficar tão agressivo */
+    color: rgba(255, 255, 255, 0.85); /* <-- Cor mais suave, um branco levemente opaco no lugar da cor forte */
+    margin-bottom: 12px; 
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 12px; 
+    cursor: pointer; 
+    user-select: none;
+}
+.carga-group-title .chevron-icon {
+    transition: transform 0.3s ease;
+    color: rgba(255, 255, 255, 0.5); /* Setinha também com cor mais suave */
+}
+.carga-group-title.open .chevron-icon {
+    transform: rotate(180deg); 
+}
+
+/* Conteúdo que abre/fecha */
+.carga-group-content {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+/* Cartões (Mantidos Iguais) */
+.carga-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 8px; }
+.carga-ex-name { font-weight: 700; font-size: 14px; color: #fff; }
+.carga-sets-container { display: flex; flex-direction: column; gap: 4px; }
+.carga-set-row { display: flex; justify-content: space-between; background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 6px; font-family: monospace; font-size: 13px; border-left: 2px solid var(--success); }
+.carga-weight { color: var(--success); font-weight: bold; font-size: 14px; }
